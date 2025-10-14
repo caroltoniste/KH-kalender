@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Kitten Calendar Colors */
+    --paper: #fef7f7;
+    --ink: #4a3a4a;
+    --accent1: #ffb3d1;
+    --accent2: #ffd1e8;
+    --accent3: #fff0f5;
+    --line: #e8c5d1;
+    --ok: #8dd4a3;
+
+    /* shadcn-ui variables */
+    --background: 0 0% 100%;
+    --foreground: 300 15% 27%;
+    --card: 330 100% 98%;
+    --card-foreground: 300 15% 27%;
+    --popover: 330 100% 98%;
+    --popover-foreground: 300 15% 27%;
+    --primary: 335 100% 85%;
+    --primary-foreground: 300 15% 27%;
+    --secondary: 330 100% 92%;
+    --secondary-foreground: 300 15% 27%;
+    --muted: 330 30% 96%;
+    --muted-foreground: 300 10% 45%;
+    --accent: 330 100% 92%;
+    --accent-foreground: 300 15% 27%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 335 30% 85%;
+    --input: 335 30% 85%;
+    --ring: 335 100% 85%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-line;
+  }
+  body {
+    @apply bg-paper text-ink font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  /* Spinning logo animation */
+  .logo-spin {
+    transition: transform 0.6s ease-in-out;
+  }
+  .logo-spin:hover {
+    transform: rotate(360deg);
+  }
+
+  /* Calendar day cell */
+  .calendar-day {
+    @apply aspect-square p-2 border-2 border-line rounded-xl transition-all;
+  }
+  
+  .calendar-day:hover {
+    @apply border-accent1 bg-accent3;
+  }
+  
+  .calendar-day.today {
+    @apply border-dashed border-accent1;
+  }
+  
+  .calendar-day.inactive {
+    @apply opacity-40;
+  }
+
+  /* Post item */
+  .post-item {
+    @apply bg-accent3 border-2 border-accent2 rounded-xl p-4 transition-all;
+  }
+  
+  .post-item:hover {
+    @apply border-accent1 shadow-md;
+  }
+  
+  .post-item.done {
+    @apply opacity-50;
+  }
+
+  /* Week divider */
+  .week-divider {
+    @apply flex items-center gap-3 my-6;
+  }
+  
+  .week-divider::before,
+  .week-divider::after {
+    content: '';
+    @apply flex-1 h-px bg-line;
+  }
+
+  /* Form animations */
+  .slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Channel badges */
+  .channel-badge {
+    @apply inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium;
+  }
+  
+  .channel-badge.tiktok {
+    @apply bg-black text-white;
+  }
+  
+  .channel-badge.facebook {
+    @apply bg-blue-600 text-white;
+  }
+  
+  .channel-badge.instagram {
+    @apply bg-gradient-to-r from-purple-500 to-pink-500 text-white;
+  }
+}
