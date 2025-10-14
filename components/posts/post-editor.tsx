@@ -235,7 +235,7 @@ export default function PostEditor({
           <DialogHeader>
             <DialogTitle>Kustuta postitus?</DialogTitle>
             <DialogDescription>
-              Kas oled kindel, et soovid kustutada postituse "{post.title}"? Seda
+              Kas oled kindel, et soovid kustutada postituse &ldquo;{post.title}&rdquo;? Seda
               toimingut ei saa tagasi võtta.
             </DialogDescription>
           </DialogHeader>

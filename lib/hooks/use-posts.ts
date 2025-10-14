@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { startOfMonth, endOfMonth } from "date-fns";
 import { toast } from "sonner";
@@ -14,7 +14,7 @@ export function usePosts(year: number, month: number) {
   const supabase = createClient();
 
   // Fetch posts for the current month
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       const monthStart = startOfMonth(new Date(year, month, 1));
       const monthEnd = endOfMonth(new Date(year, month, 1));
@@ -36,13 +36,13 @@ export function usePosts(year: number, month: number) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [year, month, supabase]);
 
   // Initial fetch
   useEffect(() => {
     setLoading(true);
     fetchPosts();
-  }, [year, month]);
+  }, [fetchPosts]);
 
   // Real-time subscription
   useEffect(() => {
@@ -86,7 +86,7 @@ export function usePosts(year: number, month: number) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [year, month]);
+  }, [year, month, supabase]);
 
   // Add post
   const addPost = async (data: PostSchemaType) => {
