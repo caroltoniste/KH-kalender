@@ -6,6 +6,7 @@ import { startOfMonth, endOfMonth } from "date-fns";
 import { toast } from "sonner";
 import type { Post } from "@/types";
 import type { PostSchemaType } from "@/lib/validations/post-schema";
+import type { Database } from "@/lib/supabase/database.types";
 import { TEAM_NAME } from "@/lib/constants";
 
 export function usePosts(year: number, month: number) {
@@ -93,7 +94,7 @@ export function usePosts(year: number, month: number) {
     try {
       const datetime = `${data.datetime}T${data.time}:00`;
 
-      const newPost = {
+      const newPost: Database["public"]["Tables"]["tasks"]["Insert"] = {
         team: TEAM_NAME,
         title: data.title,
         type: data.type,

@@ -16,6 +16,7 @@ export interface Database {
           title: string;
           type: string;
           datetime: string;
+          time: string | null;
           owner: string | null;
           channels: string[];
           notes: string | null;
@@ -31,6 +32,7 @@ export interface Database {
           title: string;
           type: string;
           datetime: string;
+          time?: string | null;
           owner?: string | null;
           channels?: string[];
           notes?: string | null;
@@ -46,6 +48,7 @@ export interface Database {
           title?: string;
           type?: string;
           datetime?: string;
+          time?: string | null;
           owner?: string | null;
           channels?: string[];
           notes?: string | null;
