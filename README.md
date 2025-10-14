@@ -195,3 +195,5 @@ Private project for Kitten Help MTÜ
 **Linnuke kirja. Nurruke koju 😺**
 
 Helping Estonian cats find loving homes!
+
+<!-- Updated: 2025-10-14 -->
