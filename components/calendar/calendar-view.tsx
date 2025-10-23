@@ -80,6 +80,7 @@ export default function CalendarView() {
             year={year}
             month={month}
             posts={posts}
+            selectedDate={selectedDate}
             onDayClick={handleDayClick}
           />
         </Card>

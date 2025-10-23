@@ -7,6 +7,7 @@ interface CalendarGridProps {
   year: number;
   month: number;
   posts: Post[];
+  selectedDate?: Date | null;
   onDayClick: (date: Date) => void;
 }
 
@@ -14,9 +15,19 @@ export default function CalendarGrid({
   year,
   month,
   posts,
+  selectedDate,
   onDayClick,
 }: CalendarGridProps) {
   const calendarDays = getCalendarDays(year, month);
+  
+  const isSameDay = (date1: Date, date2: Date | null | undefined) => {
+    if (!date2) return false;
+    return (
+      date1.getDate() === date2.getDate() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getFullYear() === date2.getFullYear()
+    );
+  };
 
   return (
     <div>
@@ -39,6 +50,8 @@ export default function CalendarGrid({
           const displayPosts = dayPosts.slice(0, 3);
           const overflowCount = dayPosts.length - 3;
 
+          const isSelected = isSameDay(day.date, selectedDate);
+          
           return (
             <button
               key={index}
@@ -46,7 +59,8 @@ export default function CalendarGrid({
               className={cn(
                 "calendar-day",
                 day.isToday && "today",
-                !day.isCurrentMonth && "inactive"
+                !day.isCurrentMonth && "inactive",
+                isSelected && "ring-2 ring-accent1 bg-accent3"
               )}
             >
               <div className="text-xs md:text-sm font-medium mb-1">
