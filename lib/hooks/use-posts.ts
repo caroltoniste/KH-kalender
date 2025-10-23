@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { startOfMonth, endOfMonth } from "date-fns";
 import { toast } from "sonner";
@@ -8,14 +8,13 @@ import type { Post } from "@/types";
 import type { PostSchemaType } from "@/lib/validations/post-schema";
 import type { Database } from "@/lib/supabase/database.types";
 import { TEAM_NAME } from "@/lib/constants";
-import type { SupabaseClient } from "@supabase/supabase-js";
 
 export function usePosts(year: number, month: number) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   
-  // Create a single Supabase client instance (memoized)
-  const supabase = useMemo(() => createClient(), []);
+  // Use singleton Supabase client
+  const supabase = createClient();
 
   // Fetch posts for the current month
   const fetchPosts = useCallback(async () => {
