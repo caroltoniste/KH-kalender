@@ -5,6 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     const { password } = await request.json();
     const correctPassword = process.env.TEAM_PASSWORD;
+    console.log(correctPassword);
 
     if (!correctPassword) {
       return NextResponse.json(
