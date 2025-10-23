@@ -8,11 +8,12 @@ import type { Post } from "@/types";
 import type { PostSchemaType } from "@/lib/validations/post-schema";
 import type { Database } from "@/lib/supabase/database.types";
 import { TEAM_NAME } from "@/lib/constants";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 export function usePosts(year: number, month: number) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const supabase = createClient();
+  const supabase: SupabaseClient<Database> = createClient();
 
   // Fetch posts for the current month
   const fetchPosts = useCallback(async () => {
@@ -92,13 +93,20 @@ export function usePosts(year: number, month: number) {
   // Add post
   const addPost = async (data: PostSchemaType) => {
     try {
+      // Validate required fields
+      if (!data.title || !data.datetime || !data.time || !data.channels || data.channels.length === 0) {
+        toast.error("Täida kõik kohustuslikud väljad");
+        return;
+      }
+
       const datetime = `${data.datetime}T${data.time}:00`;
 
-      const newPost: Database["public"]["Tables"]["tasks"]["Insert"] = {
+      // Prepare insert payload
+      const insertPayload = {
         team: TEAM_NAME,
         title: data.title,
         type: data.type,
-        datetime,
+        datetime: datetime,
         time: data.time,
         owner: data.owner || null,
         channels: data.channels,
@@ -108,18 +116,21 @@ export function usePosts(year: number, month: number) {
         done: false,
       };
 
-      const { data: inserted, error } = await supabase
+      // Use type assertion to bypass Supabase type inference issue
+      const { data: inserted, error } = await (supabase
         .from("tasks")
-        .insert(newPost)
+        .insert(insertPayload as any)
         .select()
-        .single();
+        .single());
 
       if (error) throw error;
 
       toast.success("Postitus lisatud! 😺");
       
       // Optimistic update
-      setPosts((prev) => [...prev, inserted as Post]);
+      if (inserted) {
+        setPosts((prev) => [...prev, inserted as Post]);
+      }
     } catch (error) {
       console.error("Error adding post:", error);
       toast.error("Viga postituse lisamisel");
@@ -129,10 +140,28 @@ export function usePosts(year: number, month: number) {
   // Update post
   const updatePost = async (id: string, updates: Partial<Post>) => {
     try {
-      const { error } = await supabase
+      // Validate ID
+      if (!id) {
+        toast.error("Vigane postituse ID");
+        return;
+      }
+
+      // Validate that we have something to update
+      if (Object.keys(updates).length === 0) {
+        return;
+      }
+
+      // Prepare update payload
+      const updatePayload = {
+        ...updates,
+        updated_at: new Date().toISOString(),
+      };
+
+      // Use type assertion to bypass Supabase type inference issue
+      const { error } = await ((supabase as any)
         .from("tasks")
-        .update({ ...updates, updated_at: new Date().toISOString() })
-        .eq("id", id);
+        .update(updatePayload)
+        .eq("id", id));
 
       if (error) throw error;
 
@@ -140,7 +169,7 @@ export function usePosts(year: number, month: number) {
 
       // Optimistic update
       setPosts((prev) =>
-        prev.map((post) => (post.id === id ? { ...post, ...updates } : post))
+        prev.map((post) => (post.id === id ? { ...post, ...updates, updated_at: new Date().toISOString() } : post))
       );
     } catch (error) {
       console.error("Error updating post:", error);
@@ -151,6 +180,12 @@ export function usePosts(year: number, month: number) {
   // Delete post
   const deletePost = async (id: string) => {
     try {
+      // Validate ID
+      if (!id) {
+        toast.error("Vigane postituse ID");
+        return;
+      }
+
       const { error } = await supabase.from("tasks").delete().eq("id", id);
 
       if (error) throw error;
