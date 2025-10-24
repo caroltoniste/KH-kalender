@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +7,7 @@
 
 @layer base {
   :root {
-    /* Kitten Calendar Colors */
+    /* Pastel Pink Theme */
     --paper: #fef7f7;
     --ink: #4a3a4a;
     --accent1: #ffb3d1;
@@ -14,7 +15,11 @@
     --accent3: #fff0f5;
     --line: #e8c5d1;
     --ok: #8dd4a3;
-
+    
+    /* Typewriter Font */
+    --font-typewriter: 'Special Elite', 'Courier New', monospace;
+    --font-body: 'Inter', sans-serif;
+    
     /* shadcn-ui variables */
     --background: 0 0% 100%;
     --foreground: 300 15% 27%;
@@ -44,10 +49,12 @@
     @apply border-line;
   }
   body {
-    @apply bg-paper text-ink font-sans;
+    @apply text-ink font-sans;
+    background: linear-gradient(180deg, #fce4ec 0%, #f8bbd0 50%, #fce4ec 100%);
+    min-height: 100vh;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+    font-family: var(--font-typewriter);
   }
 }
 

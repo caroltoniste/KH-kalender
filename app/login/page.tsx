@@ -42,17 +42,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(180deg, #fce4ec 0%, #f8bbd0 50%, #fce4ec 100%)' }}>
+    <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center pt-8 pb-6">
           <div className="mb-6 flex justify-center">
             <img 
               src="/roosakitten.png" 
               alt="Kitten Help Logo" 
-              className="w-24 h-24 object-contain"
+              className="w-24 h-24 object-contain logo-spin"
             />
           </div>
-          <CardTitle className="text-2xl font-heading mb-2" style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
+          <CardTitle className="text-2xl mb-2 font-bold">
             Kitten Help<br/>turunduskalender
           </CardTitle>
           <CardDescription className="text-base mt-4">

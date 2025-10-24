@@ -47,11 +47,11 @@ export default function CalendarView() {
           <img 
             src="/roosakitten.png" 
             alt="Kitten Help Logo" 
-            className="w-12 h-12 object-contain"
+            className="w-12 h-12 object-contain logo-spin"
           />
           <div>
-            <h1 className="text-2xl md:text-3xl font-heading font-bold">
-              Kitten Help Kalender
+            <h1 className="text-2xl md:text-3xl font-bold">
+              Kitten Help MTÜ turunduskalender
             </h1>
             <p className="text-sm text-muted-foreground">
               Linnuke kirja. Nurruke koju 😺
@@ -61,36 +61,36 @@ export default function CalendarView() {
         <LogoutButton />
       </div>
 
-      {/* Month Navigation */}
-      <div className="flex items-center justify-between mb-6">
-        <Button variant="outline" size="icon" onClick={handlePrevMonth}>
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
-        <h2 className="text-xl md:text-2xl font-heading font-semibold">
-          {getMonthName(month)} {year}
-        </h2>
-        <Button variant="outline" size="icon" onClick={handleNextMonth}>
-          <ChevronRight className="h-4 w-4" />
-        </Button>
-      </div>
-
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Calendar */}
-        <Card className="p-4 md:p-6">
-          <CalendarGrid
-            year={year}
-            month={month}
-            posts={posts}
-            selectedDate={selectedDate}
-            onDayClick={handleDayClick}
-          />
-        </Card>
-
-        {/* Post List */}
+        {/* Left Column: Calendar + Add Post */}
         <div className="space-y-4">
-          {/* Add Post Form */}
-          {showForm && (
+          {/* Month Navigation */}
+          <div className="flex items-center justify-between mb-4">
+            <Button variant="outline" size="icon" onClick={handlePrevMonth} className="rounded-full">
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <h2 className="text-xl md:text-2xl font-semibold">
+              {getMonthName(month)} {year}
+            </h2>
+            <Button variant="outline" size="icon" onClick={handleNextMonth} className="rounded-full">
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+
+          {/* Calendar */}
+          <Card className="p-4 md:p-6">
+            <CalendarGrid
+              year={year}
+              month={month}
+              posts={posts}
+              selectedDate={selectedDate}
+              onDayClick={handleDayClick}
+            />
+          </Card>
+
+          {/* Add Post Button or Form */}
+          {showForm ? (
             <Card className="p-4 md:p-6 slide-down">
               <PostForm
                 onSubmit={handleAddPost}
@@ -98,22 +98,24 @@ export default function CalendarView() {
                 initialDate={selectedDate || undefined}
               />
             </Card>
-          )}
-
-          {!showForm && (
+          ) : (
             <Button
               onClick={() => {
                 setSelectedDate(null);
                 setShowForm(true);
               }}
-              className="w-full"
+              className="w-full h-12 text-white font-medium rounded-full"
+              style={{ backgroundColor: '#ffb3d1' }}
             >
-              + Lisa uus postitus
+              Lisa postitus
             </Button>
           )}
+        </div>
 
-          {/* Posts */}
+        {/* Right Column: Post List */}
+        <div className="space-y-4">
           <Card className="p-4 md:p-6">
+            <h2 className="text-xl font-bold mb-4">Selle kuu postitused</h2>
             <PostList
               posts={posts}
               loading={loading}
