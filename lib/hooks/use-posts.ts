@@ -94,23 +94,17 @@ export function usePosts(year: number, month: number) {
   // Add post
   const addPost = async (data: PostSchemaType) => {
     try {
-      // Validate required fields
-      if (!data.title || !data.datetime || !data.time || !data.channels || data.channels.length === 0) {
-        toast.error("Täida kõik kohustuslikud väljad");
-        return;
-      }
-
       const datetime = `${data.datetime}T${data.time}:00`;
 
-      // Prepare insert payload
+      // Prepare insert payload (all fields optional)
       const insertPayload = {
         team: TEAM_NAME,
-        title: data.title,
+        title: data.title || "Nimetu postitus",
         type: data.type,
         datetime: datetime,
         time: data.time,
         owner: data.owner || null,
-        channels: data.channels,
+        channels: data.channels || [],
         notes: data.notes || null,
         copy: data.copy || null,
         materials: data.materials || null,

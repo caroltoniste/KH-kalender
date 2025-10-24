@@ -64,24 +64,21 @@ export default function PostForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <h3 className="font-heading text-xl font-semibold">Lisa uus postitus</h3>
+      <h3 className="font-heading text-xl font-semibold mb-4">Lisa postitus valitud kuupäevale</h3>
 
-      {/* Date and Time */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="datetime">Kuupäev</Label>
-          <Input id="datetime" type="date" {...register("datetime")} />
-          {errors.datetime && (
-            <p className="text-xs text-destructive">{errors.datetime.message}</p>
-          )}
+      {/* Row 1: Date, Time, Type */}
+      <div className="grid grid-cols-3 gap-3">
+        <div className="space-y-1">
+          <Label htmlFor="datetime" className="text-sm font-semibold">Kuupäev</Label>
+          <Input id="datetime" type="date" {...register("datetime")} className="h-11" />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="time">Kellaaeg</Label>
+        <div className="space-y-1">
+          <Label htmlFor="time" className="text-sm font-semibold">Kellaaeg</Label>
           <Select
             value={watch("time")}
             onValueChange={(value) => setValue("time", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="h-11">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -93,106 +90,113 @@ export default function PostForm({
             </SelectContent>
           </Select>
         </div>
+        <div className="space-y-1">
+          <Label htmlFor="type" className="text-sm font-semibold">Tüüp</Label>
+          <Select
+            value={selectedType}
+            onValueChange={(value) => setValue("type", value as any)}
+          >
+            <SelectTrigger className="h-11">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.entries(POST_TYPES_ET).map(([key, label]) => (
+                <SelectItem key={key} value={key}>
+                  {label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      {/* Type */}
-      <div className="space-y-2">
-        <Label htmlFor="type">Postituse tüüp</Label>
-        <Select
-          value={selectedType}
-          onValueChange={(value) => setValue("type", value as any)}
-        >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.entries(POST_TYPES_ET).map(([key, label]) => (
-              <SelectItem key={key} value={key}>
-                {label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      {/* Row 2: Title and Owner */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-1">
+          <Label htmlFor="title" className="text-sm font-semibold">Pealkiri</Label>
+          <Input id="title" {...register("title")} placeholder="Näiteks: Gorilla neuroloogi update" className="h-11" />
+        </div>
+        <div className="space-y-1">
+          <Label htmlFor="owner" className="text-sm font-semibold">Vastutaja</Label>
+          <Input id="owner" {...register("owner")} placeholder="Kes teeb" className="h-11" />
+        </div>
       </div>
 
-      {/* Title */}
+      {/* Row 3: Channels */}
       <div className="space-y-2">
-        <Label htmlFor="title">Pealkiri *</Label>
-        <Input id="title" {...register("title")} placeholder="Postituse pealkiri" />
-        {errors.title && (
-          <p className="text-xs text-destructive">{errors.title.message}</p>
-        )}
-      </div>
-
-      {/* Owner */}
-      <div className="space-y-2">
-        <Label htmlFor="owner">Vastutaja</Label>
-        <Input id="owner" {...register("owner")} placeholder="Nimi" />
-      </div>
-
-      {/* Channels */}
-      <div className="space-y-2">
-        <Label>Kanalid *</Label>
+        <Label className="text-sm font-semibold">Kanalid</Label>
         <div className="flex gap-3">
           {(["tiktok", "facebook", "instagram"] as Channel[]).map((channel) => (
             <label
               key={channel}
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-pink-200 bg-white cursor-pointer hover:border-pink-300 transition-colors"
             >
               <Checkbox
                 checked={selectedChannels.includes(channel)}
                 onCheckedChange={() => toggleChannel(channel)}
               />
-              <span className="text-sm">
-                {CHANNEL_ICONS[channel]} {CHANNEL_NAMES[channel]}
+              <span className="text-base font-medium flex items-center gap-1.5">
+                {channel === 'tiktok' && '▶️'}
+                {channel === 'facebook' && '📘'}
+                {channel === 'instagram' && '📷'}
+                {CHANNEL_NAMES[channel]}
               </span>
             </label>
           ))}
         </div>
-        {errors.channels && (
-          <p className="text-xs text-destructive">{errors.channels.message}</p>
-        )}
       </div>
 
-      {/* Copy */}
-      <div className="space-y-2">
-        <Label htmlFor="copy">Postituse tekst</Label>
-        <Textarea
-          id="copy"
-          {...register("copy")}
-          placeholder="Postituse sisu..."
-          rows={3}
-        />
-      </div>
-
-      {/* Materials */}
-      <div className="space-y-2">
-        <Label htmlFor="materials">Materjalid (lingid)</Label>
-        <Textarea
-          id="materials"
-          {...register("materials")}
-          placeholder="Lingid piltidele, videotele..."
-          rows={2}
-        />
-      </div>
-
-      {/* Notes */}
-      <div className="space-y-2">
-        <Label htmlFor="notes">Märkused</Label>
+      {/* Row 4: Notes (full width) */}
+      <div className="space-y-1">
+        <Label htmlFor="notes" className="text-sm font-semibold">Märkmed</Label>
         <Textarea
           id="notes"
           {...register("notes")}
-          placeholder="Täiendavad märkused..."
-          rows={2}
+          placeholder="CTA, visuaalid, lingid"
+          rows={3}
+          className="resize-none"
         />
       </div>
 
+      {/* Row 5: Copy and Materials */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-1">
+          <Label htmlFor="copy" className="text-sm font-semibold">Copy tekst</Label>
+          <Textarea
+            id="copy"
+            {...register("copy")}
+            placeholder="Postituse tekst, hashtagid, CTA"
+            rows={3}
+            className="resize-none"
+          />
+        </div>
+        <div className="space-y-1">
+          <Label htmlFor="materials" className="text-sm font-semibold">Materjalid</Label>
+          <Textarea
+            id="materials"
+            {...register("materials")}
+            placeholder="Video/pildi lingid, visuaalid"
+            rows={3}
+            className="resize-none"
+          />
+        </div>
+      </div>
+
       {/* Actions */}
-      <div className="flex gap-2">
-        <Button type="submit" className="flex-1">
-          Salvesta
+      <div className="flex gap-3 pt-2">
+        <Button 
+          type="submit" 
+          className="flex-1 h-12 text-white font-medium rounded-full" 
+          style={{ backgroundColor: '#ffb3d1' }}
+        >
+          Lisa postitus
         </Button>
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={onCancel}
+          className="h-12 px-8 rounded-full"
+        >
           Tühista
         </Button>
       </div>
