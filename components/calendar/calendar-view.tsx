@@ -42,15 +42,15 @@ export default function CalendarView() {
   return (
     <div className="container mx-auto p-4 md:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
           <img 
             src="/roosakitten.png" 
             alt="Kitten Help Logo" 
-            className="w-12 h-12 object-contain logo-spin"
+            className="w-20 h-20 md:w-24 md:h-24 object-contain logo-spin"
           />
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold">
+            <h1 className="text-2xl md:text-3xl font-bold mb-1">
               Kitten Help MTÜ turunduskalender
             </h1>
             <p className="text-sm text-muted-foreground">

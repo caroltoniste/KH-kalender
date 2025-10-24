@@ -32,51 +32,36 @@ export default function PostItem({ post, onUpdate, onDelete }: PostItemProps) {
     <div>
       <button
         onClick={() => setIsEditing(!isEditing)}
-        className={cn("post-item w-full text-left", post.done && "done")}
+        className={cn(
+          "w-full text-left p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-300 hover:bg-pink-50 transition-all",
+          post.done && "opacity-50"
+        )}
       >
-        <div className="flex items-start gap-3">
-          {/* Checkbox */}
-          <div onClick={(e) => e.stopPropagation()}>
-            <Checkbox checked={post.done} onCheckedChange={handleToggleDone} />
-          </div>
+        <div className="flex items-center gap-3">
+          {/* Emoji */}
+          <span className="text-2xl flex-shrink-0">{POST_TYPE_EMOJIS[post.type]}</span>
 
           {/* Content */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-start gap-2 mb-1">
-              <span className="text-xl">{POST_TYPE_EMOJIS[post.type]}</span>
-              <div className="flex-1">
-                <h4 className="font-semibold">{post.title}</h4>
-                <p className="text-sm text-muted-foreground">
-                  {formatEstonianDateTime(postDate)} •{" "}
-                  {getWeekdayName(postDate)}
-                </p>
-              </div>
+            <div className="text-sm text-gray-600 mb-0.5">
+              {formatEstonianDateTime(postDate)} ({getWeekdayName(postDate)}) {post.time} • Vastutab: <span className="font-medium">{post.owner || 'test'}</span> • <span className="font-medium">{post.title}</span>
             </div>
-
-            {/* Owner */}
-            {post.owner && (
-              <p className="text-sm text-muted-foreground mb-2">
-                👤 {post.owner}
-              </p>
-            )}
-
+            
             {/* Channels */}
             {post.channels.length > 0 && (
-              <div className="flex gap-2 mb-2">
+              <div className="flex gap-1 mt-1">
                 {post.channels.map((channel) => (
-                  <span key={channel} className={cn("channel-badge", channel)}>
+                  <span key={channel} className={cn("channel-badge text-xs px-1.5 py-0.5", channel)}>
                     {CHANNEL_ICONS[channel]}
                   </span>
                 ))}
               </div>
             )}
+          </div>
 
-            {/* Notes */}
-            {post.notes && (
-              <p className="text-sm text-muted-foreground italic">
-                💭 {post.notes}
-              </p>
-            )}
+          {/* Checkbox */}
+          <div onClick={(e) => e.stopPropagation()} className="flex-shrink-0">
+            <Checkbox checked={post.done} onCheckedChange={handleToggleDone} />
           </div>
         </div>
       </button>

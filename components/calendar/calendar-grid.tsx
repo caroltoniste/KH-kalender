@@ -32,11 +32,11 @@ export default function CalendarGrid({
   return (
     <div>
       {/* Weekday headers */}
-      <div className="grid grid-cols-7 gap-2 mb-2">
+      <div className="grid grid-cols-7 gap-1 mb-2">
         {WEEKDAYS_SHORT_ET.map((day) => (
           <div
             key={day}
-            className="text-center text-xs md:text-sm font-semibold text-muted-foreground p-2"
+            className="text-center text-xs font-medium text-gray-600 py-2"
           >
             {day}
           </div>
@@ -44,7 +44,7 @@ export default function CalendarGrid({
       </div>
 
       {/* Calendar days */}
-      <div className="grid grid-cols-7 gap-2">
+      <div className="grid grid-cols-7 gap-1">
         {calendarDays.map((day, index) => {
           const dayPosts = getPostsForDay(posts, day.date);
           const displayPosts = dayPosts.slice(0, 3);
@@ -63,17 +63,17 @@ export default function CalendarGrid({
                 isSelected && "ring-2 ring-accent1 bg-accent3"
               )}
             >
-              <div className="text-xs md:text-sm font-medium mb-1">
+              <div className="text-sm font-semibold text-gray-700 mb-1">
                 {day.date.getDate()}
               </div>
-              <div className="flex flex-col items-center gap-0.5">
+              <div className="flex flex-wrap gap-0.5 justify-center items-center">
                 {displayPosts.map((post) => (
-                  <span key={post.id} className="text-sm md:text-base">
+                  <span key={post.id} className="text-base leading-none">
                     {POST_TYPE_EMOJIS[post.type]}
                   </span>
                 ))}
                 {overflowCount > 0 && (
-                  <span className="text-[10px] text-muted-foreground font-medium">
+                  <span className="text-xs text-gray-500 font-medium">
                     +{overflowCount}
                   </span>
                 )}
