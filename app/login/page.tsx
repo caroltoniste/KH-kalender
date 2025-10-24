@@ -42,34 +42,43 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-paper p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mb-4 flex justify-center">
-            <div className="w-24 h-24 rounded-full bg-accent2 flex items-center justify-center text-5xl logo-spin">
-              😺
-            </div>
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #ffd1e8 0%, #ffb3d1 100%)' }}>
+      <Card className="w-full max-w-md shadow-xl">
+        <CardHeader className="text-center pt-8 pb-6">
+          <div className="mb-6 flex justify-center">
+            <img 
+              src="/roosakitten.png" 
+              alt="Kitten Help Logo" 
+              className="w-24 h-24 object-contain"
+            />
           </div>
-          <CardTitle className="text-3xl">Kitten Help Kalender</CardTitle>
-          <CardDescription>
-            Linnuke kirja. Nurruke koju 😺
+          <CardTitle className="text-2xl font-heading mb-2" style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
+            Kitten Help<br/>turunduskalender
+          </CardTitle>
+          <CardDescription className="text-base mt-4">
+            Sisesta turundustiimi parool:
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pb-8">
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="password">Tiimi parool</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Sisesta parool"
+                placeholder="Parool"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={loading}
                 required
-                autoFocus
+                className="h-12 text-center"
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button 
+              type="submit" 
+              className="w-full h-12 text-white font-medium" 
+              style={{ backgroundColor: '#ffb3d1' }}
+              disabled={loading}
+            >
               {loading ? "Sisenen..." : "Logi sisse"}
             </Button>
           </form>

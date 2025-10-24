@@ -44,9 +44,11 @@ export default function CalendarView() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-accent2 flex items-center justify-center text-2xl logo-spin">
-            😺
-          </div>
+          <img 
+            src="/roosakitten.png" 
+            alt="Kitten Help Logo" 
+            className="w-12 h-12 object-contain"
+          />
           <div>
             <h1 className="text-2xl md:text-3xl font-heading font-bold">
               Kitten Help Kalender
