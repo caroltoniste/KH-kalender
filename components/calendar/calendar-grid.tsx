@@ -63,12 +63,12 @@ export default function CalendarGrid({
                 isSelected && "ring-2 ring-accent1 bg-accent3"
               )}
             >
-              <div className="text-sm font-semibold text-gray-700 mb-1">
+              <div className="text-sm font-semibold text-gray-700">
                 {day.date.getDate()}
               </div>
-              <div className="flex flex-wrap gap-0.5 justify-center items-center">
+              <div className="flex flex-wrap gap-1 justify-center items-center mt-1">
                 {displayPosts.map((post) => (
-                  <span key={post.id} className="text-base leading-none">
+                  <span key={post.id} className="text-lg leading-none">
                     {POST_TYPE_EMOJIS[post.type]}
                   </span>
                 ))}

@@ -10,7 +10,7 @@ export const WEEKDAYS_ET = [
   "Pühapäev",
 ];
 
-export const WEEKDAYS_SHORT_ET = ["E", "T", "K", "N", "R", "L", "P"];
+export const WEEKDAYS_SHORT_ET = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export const MONTHS_ET = [
   "Jaanuar",
@@ -43,7 +43,7 @@ export const POST_TYPE_EMOJIS: Record<PostType, string> = {
   donation: "💖",
   video: "🎬",
   event: "📅",
-  adoption: "🐾",
+  adoption: "🏠",
   news: "📰",
   lottery: "🎟️",
   collaboration: "🤝",
@@ -52,8 +52,8 @@ export const POST_TYPE_EMOJIS: Record<PostType, string> = {
 };
 
 export const CHANNEL_ICONS: Record<Channel, string> = {
-  tiktok: "🎵",
-  facebook: "📘",
+  tiktok: "▶",
+  facebook: "f",
   instagram: "📷",
 };
 

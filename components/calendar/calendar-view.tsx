@@ -47,7 +47,7 @@ export default function CalendarView() {
           <img 
             src="/roosakitten.png" 
             alt="Kitten Help Logo" 
-            className="w-20 h-20 md:w-24 md:h-24 object-contain logo-spin"
+            className="w-16 h-16 object-contain logo-spin"
           />
           <div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">

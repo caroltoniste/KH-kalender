@@ -34,19 +34,13 @@ export default function PostList({
   const weekGroups = groupPostsByWeek(sortPostsByDate(posts));
 
   return (
-    <div className="space-y-6">
-      <h3 className="font-heading text-xl font-semibold">
-        Postitused ({posts.length})
-      </h3>
-
-      {weekGroups.map((group) => (
+    <div className="space-y-4">
+      {weekGroups.map((group, index) => (
         <div key={`${group.year}-W${group.weekNumber}`}>
-          {/* Week Divider */}
-          <div className="week-divider">
-            <span className="text-sm font-semibold text-muted-foreground">
-              Nädal {group.weekNumber} ({group.dateRange})
-            </span>
-          </div>
+          {/* Dotted line divider between weeks */}
+          {index > 0 && (
+            <div className="border-t-2 border-dotted border-pink-300 my-4"></div>
+          )}
 
           {/* Posts in this week */}
           <div className="space-y-3">
