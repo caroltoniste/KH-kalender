@@ -42,7 +42,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #ffd1e8 0%, #ffb3d1 100%)' }}>
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(180deg, #fce4ec 0%, #f8bbd0 50%, #fce4ec 100%)' }}>
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center pt-8 pb-6">
           <div className="mb-6 flex justify-center">
